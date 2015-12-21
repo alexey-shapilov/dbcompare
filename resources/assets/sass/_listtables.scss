@@ -1,0 +1,34 @@
+.listables {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    input {
+      vertical-align: middle;
+    }
+    span {
+      vertical-align: middle;
+    }
+  }
+
+  ul {
+    li {
+      text-decoration: line-through;
+    }
+  }
+}
+
+.equal {
+  text-decoration: none !important;
+}
+
+.change {
+  color: blue;
+  text-decoration: none !important;
+}
+
+.new {
+  text-decoration: none !important;
+  color: red;
+}

@@ -5759,4 +5759,26 @@ body {
   display: table;
   font-weight: 100; }
 
+.listables {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .listables li input {
+    vertical-align: middle; }
+  .listables li span {
+    vertical-align: middle; }
+  .listables ul li {
+    text-decoration: line-through; }
+
+.equal {
+  text-decoration: none !important; }
+
+.change {
+  color: blue;
+  text-decoration: none !important; }
+
+.new {
+  text-decoration: none !important;
+  color: red; }
+
 /*# sourceMappingURL=app.css.map */

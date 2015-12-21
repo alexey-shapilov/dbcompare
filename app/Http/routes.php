@@ -15,4 +15,4 @@
         return view('home');
     }]);
 
-    Route::post('list_tables', 'DbCompareController@listTables');
+    Route::match(['get', 'post'], 'list_tables', 'DbCompareController@listTables');

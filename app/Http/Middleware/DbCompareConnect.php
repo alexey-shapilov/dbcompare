@@ -40,7 +40,9 @@
 
                 session(['connection1' => $connection1]);
                 session(['connection2' => $connection2]);
-            } else if ($connection1 = session('connection1') && $connection2 = session('connection2')) {
+            } else if (session('connection1') && session('connection2')) {
+                $connection1 = session('connection1');
+                $connection2 = session('connection2');
             } else {
                 return redirect(route('home'));
             }
