@@ -40,73 +40,68 @@
             $db1 = DB::connection('connection1');
             $db2 = DB::connection('connection2');
 
-            $db1Tables = $db1->select('SHOW TABLES');
-            $db2Tables = $db2->select('SHOW TABLES');
-
             $db1Name = $db1->getDatabaseName();
             $db2Name = $db2->getDatabaseName();
 
             $db1Prefix = $db1->getTablePrefix();
             $db2Prefix = $db2->getTablePrefix();
 
-            $this->tables = array(
-                $db1Name => array(
-                    'prefix' => $db1Prefix
-                ),
-                $db2Name => array(
-                    'prefix' => $db2Prefix
-                )
-            );
+            $db1Tables = $db1->select('SELECT cl.TABLE_NAME tables, cl.COLUMN_NAME columns, cl.COLUMN_TYPE dtype FROM information_schema.columns cl, information_schema.TABLES ss WHERE cl.TABLE_NAME = ss.TABLE_NAME AND cl.TABLE_SCHEMA = "' . $db1Name . '" AND ss.TABLE_TYPE = "BASE TABLE" ORDER BY cl.table_name');
+            $db2Tables = $db1->select('SELECT cl.TABLE_NAME tables, cl.COLUMN_NAME columns, cl.COLUMN_TYPE dtype FROM information_schema.columns cl, information_schema.TABLES ss WHERE cl.TABLE_NAME = ss.TABLE_NAME AND cl.TABLE_SCHEMA = "' . $db2Name . '" AND ss.TABLE_TYPE = "BASE TABLE" ORDER BY cl.table_name');
+
             foreach ($db1Tables as $table) {
-                $tName = $this->unPrefix($table->{'Tables_in_' . $db1Name}, $db1Prefix);
-                $this->tables[$db1Name]['tables'][] = $tName;
-                $this->tables[$db1Name][$tName] = $db1->select('SHOW COLUMNS FROM `' . $table->{'Tables_in_' . $db1Name} . '`');
+                $tName = $this->unPrefix($table->tables, $db1Prefix);
+                $this->tables[$db1Name][$tName]['fields'][$table->columns]['type'] = $table->dtype;
             }
+
             foreach ($db2Tables as $table) {
-                $tName = $this->unPrefix($table->{'Tables_in_' . $db2Name}, $db2Prefix);
-                $this->tables[$db2Name]['tables'][] = $tName;
-                $this->tables[$db2Name][$tName] = $db2->select('SHOW COLUMNS FROM `' . $table->{'Tables_in_' . $db2Name} . '`');
+                $tName = $this->unPrefix($table->tables, $db2Prefix);
+                $this->tables[$db2Name][$tName]['fields'][$table->columns]['type'] = $table->dtype;
             }
 
-            $this->currentCompare = array($db1Name, $db2Name);
-            $tablesDiff = array('tables' => array_udiff($this->tables[$db1Name]['tables'], $this->tables[$db2Name]['tables'], array($this, 'compare_table')));
+            $allTables = array_unique(array_merge(array_keys($this->tables[$db1Name]), array_keys($this->tables[$db2Name])));
 
-            foreach ($tablesDiff['tables'] as $table) {
-                $tablesDiff[$table] = $this->tables[$db1Name][$table];
+            $db1Tables = &$this->tables[$db1Name];
+            $db2Tables = &$this->tables[$db2Name];
 
-//                foreach ($tablesDiff[$table] as $columnMain) {
-
-                if (isset($this->tables[$db2Name][$table])) {
-                    foreach ($this->tables[$db2Name][$table] as $columnCompare) {
-                        $equal = -1;
-                        foreach ($tablesDiff[$table] as $columnMain) {
-                            if ($columnMain->Field == $columnCompare->Field) {
-                                $equal = 0;
-                                $columnMain->status = 'equal';
-                                if ($columnMain->Type != $columnCompare->Type) {
-                                    $columnMain->status = 'change';
-                                    $equal = 1;
-                                }
-                                break;
+            foreach ($allTables as $table) {
+                if (isset($db1Tables[$table]['fields']) && isset($db2Tables[$table]['fields'])) {
+                    $allFields = array_unique(array_merge(array_keys($db1Tables[$table]['fields']), array_keys($db2Tables[$table]['fields'])));
+                    foreach ($allFields as $field) {
+                        if (isset($db1Tables[$table]['fields'][$field]) && isset($db2Tables[$table]['fields'][$field])) {
+                            if ($db1Tables[$table]['fields'][$field]['type'] !== $db2Tables[$table]['fields'][$field]['type']) {
+                                $db1Tables[$table]['fields'][$field]['status'] = 'change';
+                                $db2Tables[$table]['fields'][$field]['status'] = 'change';
+                            } else {
+                                $db1Tables[$table]['fields'][$field]['status'] = 'equal';
+                                $db2Tables[$table]['fields'][$field]['status'] = 'equal';
                             }
-                        }
-                        if ($equal === -1) {
-                            $column = $columnCompare;
-                            $column->status = 'new';
-                            $tablesDiff[$table][] = $column;
+                        } else if (!isset($db1Tables[$table]['fields'][$field])) {
+                            $db1Tables[$table]['fields'][$field] = $db2Tables[$table]['fields'][$field];
+                            $db1Tables[$table]['fields'][$field]['status'] = 'new';
+                        } else {
+                            $db2Tables[$table]['fields'][$field] = $db1Tables[$table]['fields'][$field];
+                            $db2Tables[$table]['fields'][$field]['status'] = 'new';
                         }
                     }
+                    ksort($db1Tables[$table]['fields']);
+                    ksort($db2Tables[$table]['fields']);
+                } else if (!isset($db1Tables[$table])) {
+                    $db1Tables[$table] = array(
+                        'fields' => $db2Tables[$table]['fields'],
+                        'status' => 'new'
+                    );
+                } else {
+                    $db2Tables[$table] = array(
+                        'fields' => $db1Tables[$table]['fields'],
+                        'status' => 'new'
+                    );
                 }
-
-//                }
             }
 
-//            $this->currentCompare = array($db2Name, $db1Name);
-//            $tablesDiff[$db2Name] = array('prefix' => $db2Prefix, 'tables' => array_udiff($this->tables[$db2Name]['tables'], $this->tables[$db1Name]['tables'], array($this, 'compare_table')));
-//            foreach ($tablesDiff[$db2Name]['tables'] as $table) {
-//                $tablesDiff[$db2Name][$table] = $this->tables[$db2Name][$table];
-//            }
+            ksort($db1Tables);
+            ksort($db2Tables);
 
-            return view('listtables', array('tables' => $this->tables, 'tablesDiff' => $tablesDiff));
+            return view('listtables', array('tables' => $this->tables));
         }
     }

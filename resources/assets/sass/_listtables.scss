@@ -1,21 +1,14 @@
-.listables {
+h4 {
+  font-weight: bold;
+}
+
+.listtables {
   list-style: none;
   margin: 0;
   padding: 0;
-
-  li {
-    input {
-      vertical-align: middle;
-    }
-    span {
-      vertical-align: middle;
-    }
-  }
-
-  ul {
-    li {
-      text-decoration: line-through;
-    }
+  & > li {
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 20px;
   }
 }
 
@@ -31,4 +24,13 @@
 .new {
   text-decoration: none !important;
   color: red;
+}
+
+.field {
+  font-weight: bold;
+  font-size: 16px;
+
+  &-type {
+    font-size: 11px;
+  }
 }

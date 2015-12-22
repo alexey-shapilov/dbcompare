@@ -5759,16 +5759,16 @@ body {
   display: table;
   font-weight: 100; }
 
-.listables {
+h4 {
+  font-weight: bold; }
+
+.listtables {
   list-style: none;
   margin: 0;
   padding: 0; }
-  .listables li input {
-    vertical-align: middle; }
-  .listables li span {
-    vertical-align: middle; }
-  .listables ul li {
-    text-decoration: line-through; }
+  .listtables > li {
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 20px; }
 
 .equal {
   text-decoration: none !important; }
@@ -5780,5 +5780,11 @@ body {
 .new {
   text-decoration: none !important;
   color: red; }
+
+.field {
+  font-weight: bold;
+  font-size: 16px; }
+  .field-type {
+    font-size: 11px; }
 
 /*# sourceMappingURL=app.css.map */
