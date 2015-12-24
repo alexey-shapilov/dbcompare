@@ -17,7 +17,7 @@
         public function handle($request, Closure $next) {
             if ($request->has('server1') && $request->has('server2')) {
                 $connection1 = array(
-                    'driver' => 'mysql',
+                    'driver' => $request->input('driver1'),
                     'host' => $request->input('server1'),
                     'database' => $request->input('database1'),
                     'username' => $request->input('user1'),
@@ -25,10 +25,11 @@
                     'charset' => 'utf8',
                     'collation' => 'utf8_general_ci',
                     'prefix' => $request->input('prefix1'),
+                    'schema'   => 'public',
                 );
 
                 $connection2 = array(
-                    'driver' => 'mysql',
+                    'driver' => $request->input('driver2'),
                     'host' => $request->input('server2'),
                     'database' => $request->input('database2'),
                     'username' => $request->input('user2'),
@@ -36,6 +37,7 @@
                     'charset' => 'utf8',
                     'collation' => 'utf8_general_ci',
                     'prefix' => $request->input('prefix2'),
+                    'schema'   => 'public',
                 );
 
                 session(['connection1' => $connection1]);

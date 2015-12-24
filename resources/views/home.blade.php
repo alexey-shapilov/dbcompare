@@ -16,6 +16,15 @@
                     <div class="panel-body">
                         <div id="connection1">
                             <div class="form-group">
+                                <label for="driver1">Драйвер</label>
+                                <select class="form-control" name="driver1" id="driver1">
+                                    <option selected="selected" value="mysql">MySQL</option>
+                                    <option value="pgsql">Postgres</option>
+                                    <option value="sqlite">SQLite</option>
+                                    <option value="sqlsrv">SQL Server</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="server1">Сервер</label>
                                 <input type="text" class="form-control" name="server1" id="server1"
                                        placeholder="Адрес сервера" value="localhost">
@@ -52,6 +61,15 @@
                     </div>
                     <div class="panel-body">
                         <div id="connection2">
+                            <div class="form-group">
+                                <label for="driver2">Драйвер</label>
+                                <select class="form-control" name="driver2" id="driver2">
+                                    <option selected="selected" value="mysql">MySQL</option>
+                                    <option value="pgsql">Postgres</option>
+                                    <option value="sqlite">SQLite</option>
+                                    <option value="sqlsrv">SQL Server</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="server2">Сервер</label>
                                 <input type="text" class="form-control" name="server2" id="server2"

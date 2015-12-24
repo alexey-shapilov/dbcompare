@@ -144,6 +144,8 @@
             App\Providers\AuthServiceProvider::class,
             App\Providers\EventServiceProvider::class,
             App\Providers\RouteServiceProvider::class,
+
+            App\Providers\DbCompareServiceProvider::class,
         ],
 
         /*
@@ -191,5 +193,7 @@
             'URL' => Illuminate\Support\Facades\URL::class,
             'Validator' => Illuminate\Support\Facades\Validator::class,
             'View' => Illuminate\Support\Facades\View::class,
+
+            'DbCompare' => App\Facades\DbCompare::class,
         ],
     ];

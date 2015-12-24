@@ -5759,6 +5759,9 @@ body {
   display: table;
   font-weight: 100; }
 
+.hide {
+  display: none; }
+
 h4 {
   font-weight: bold; }
 
@@ -5770,15 +5773,13 @@ h4 {
     border-bottom: 1px dotted #ccc;
     padding-bottom: 20px; }
 
-.equal {
-  text-decoration: none !important; }
-
 .change {
-  color: blue;
-  text-decoration: none !important; }
+  color: blue; }
 
 .new {
-  text-decoration: none !important;
+  color: red; }
+
+.tableNew {
   color: red; }
 
 .field {
@@ -5786,5 +5787,11 @@ h4 {
   font-size: 16px; }
   .field-type {
     font-size: 11px; }
+
+.count {
+  cursor: pointer; }
+
+.dataShow {
+  text-decoration: line-through; }
 
 /*# sourceMappingURL=app.css.map */

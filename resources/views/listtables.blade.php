@@ -7,17 +7,23 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+    <div class="db-compare container-fluid">
         <div class="row">
             @foreach ($tables as $key=>$value)
                 <div class="col-md-6 {{$key}}">
-                    <div class="panel panel-default">
+                    <div class="db-panel panel panel-default">
                         <div class="panel-heading">
                             <span>{{$key}}</span>
+                            @if ($value['countChange'])
+                                <sub class="count change" data-show="change">{{$value['countChange']}}</sub>
+                            @endif
+                            @if ($value['countNew'])
+                                <sub class="count new"  data-show="new">{{$value['countNew']}}</sub>
+                            @endif
                         </div>
                         <div class="panel-body">
                             <ul class="listtables">
-                                @foreach ($value as $k=>$v)
+                                @foreach ($value['tables'] as $k=>$v)
                                     <li class="<?= isset($v['status']) ? $v['status'] : '' ?>">
                                         <h4><span>{{$k}}</span></h4>
 
@@ -37,26 +43,5 @@
                 </div>
             @endforeach
         </div>
-
-        {{--<div class="row">--}}
-        {{--@foreach ($tables as $key=>$value)--}}
-        {{--<div class="col-md-6 {{$key}}">--}}
-        {{--<div class="panel panel-default">--}}
-        {{--<div class="panel-heading">Список таблиц <strong>{{$key}}</strong> (префикс:--}}
-        {{--<strong>{{$value['prefix']}}</strong>)--}}
-        {{--</div>--}}
-        {{--<div class="panel-body">--}}
-        {{--<ul id="{{$key}}" class="listables">--}}
-        {{--@foreach ($value['tables'] as $table)--}}
-        {{--<li>--}}
-        {{--<input type="checkbox" aria-label="..."><span> {{$table}}</span>--}}
-        {{--</li>--}}
-        {{--@endforeach--}}
-        {{--</ul>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--@endforeach--}}
-        {{--</div>--}}
     </div>
 @endsection

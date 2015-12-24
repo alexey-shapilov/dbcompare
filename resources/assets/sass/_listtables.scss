@@ -12,17 +12,15 @@ h4 {
   }
 }
 
-.equal {
-  text-decoration: none !important;
-}
-
 .change {
   color: blue;
-  text-decoration: none !important;
 }
 
 .new {
-  text-decoration: none !important;
+  color: red;
+}
+
+.tableNew {
   color: red;
 }
 
@@ -33,4 +31,12 @@ h4 {
   &-type {
     font-size: 11px;
   }
+}
+
+.count {
+  cursor: pointer;
+}
+
+.dataShow {
+  text-decoration: line-through;
 }

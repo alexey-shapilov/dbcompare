@@ -4,6 +4,7 @@
     <title>@yield('title')</title>
 
     <link rel="stylesheet" type="text/css" href="<?=asset('public/css/app.css')?>"/>
+    <script src="<?=asset('public/js/app.js')?>"></script>
     @yield('style')
     @yield('scripts')
 </head>

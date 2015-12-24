@@ -1,0 +1,19 @@
+{
+  "name": "dbCompare",
+  "version": "0.0.0",
+  "homepage": "https://github.com/alexey-shapilov/dbcompare",
+  "authors": [
+    "Alexus <alexey.shapilov@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.4"
+  }
+}
