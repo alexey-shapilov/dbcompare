@@ -33,11 +33,13 @@
             foreach ($db1Tables as $table) {
                 $tName = $this->unPrefix($table->tables, $db1->getTablePrefix());
                 $this->tables[$db1Name]['tables'][$tName]['fields'][$table->columns]['type'] = $table->dtype;
+                $this->tables[$db1Name]['tables'][$tName]['fields'][$table->columns]['key'] = $table->dkey;
             }
 
             foreach ($db2Tables as $table) {
                 $tName = $this->unPrefix($table->tables, $db2->getTablePrefix());
                 $this->tables[$db2Name]['tables'][$tName]['fields'][$table->columns]['type'] = $table->dtype;
+                $this->tables[$db2Name]['tables'][$tName]['fields'][$table->columns]['key'] = $table->dkey;
             }
 
             $allTables = array_unique(array_merge(array_keys($this->tables[$db1Name]['tables']), array_keys($this->tables[$db2Name]['tables'])));

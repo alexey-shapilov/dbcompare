@@ -1,3 +1,6 @@
+@import "compass/css3";
+@import "mixin";
+
 html, body {
   height: 100%;
 }
@@ -8,9 +11,13 @@ body {
   width: 100%;
   display: table;
   font-weight: 100;
-  //font-family: 'Lato';
 }
 
 .hide {
   display: none;
+}
+
+%inline-v-middle {
+  display: inline-block;
+  vertical-align: middle;
 }

@@ -40,3 +40,24 @@ h4 {
 .dataShow {
   text-decoration: line-through;
 }
+
+.field-info {
+  @extend %inline-v-middle
+}
+
+.key-field {
+  @extend %inline-v-middle
+}
+
+.key-mul {
+  @include get-sprite(sprite-map("sprite/keys/*.png"), key-mul);
+}
+
+.key-pri {
+  @include get-sprite(sprite-map("sprite/keys/*.png"), key-pri);
+}
+
+.key-uni {
+  @include get-sprite(sprite-map("sprite/keys/*.png"), key-uni);
+}
+

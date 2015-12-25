@@ -18,20 +18,25 @@
                                 <sub class="count change" data-show="change">{{$value['countChange']}}</sub>
                             @endif
                             @if ($value['countNew'])
-                                <sub class="count new"  data-show="new">{{$value['countNew']}}</sub>
+                                <sub class="count new" data-show="new">{{$value['countNew']}}</sub>
                             @endif
                         </div>
                         <div class="panel-body">
                             <ul class="listtables">
                                 @foreach ($value['tables'] as $k=>$v)
-                                    <li class="<?= isset($v['status']) ? $v['status'] : '' ?>">
+                                    <li class="{{ isset($v['status']) ? $v['status'] : '' }}">
                                         <h4><span>{{$k}}</span></h4>
 
                                         <ul id="{{$key}}__{{$k}}" class="listfields">
                                             @foreach ($v['fields'] as $kf=>$vf)
-                                                <li class="<?= isset($vf['status']) ? $vf['status'] : '' ?>">
-                                                    <span class="field">{{$kf}}</span>
-                                                    <span class="field-type">{{$vf['type']}}</span>
+                                                <li class="{{ isset($vf['status']) ? $vf['status'] : '' }}">
+                                                    @if (isset($vf['key']) && !empty($vf['key']))
+                                                        <i class="key-field key-{{strtolower($vf['key'])}}"></i>
+                                                    @endif
+                                                    <div class="field-info">
+                                                        <span class="field">{{$kf}}</span>
+                                                        <span class="field-type">{{$vf['type']}}</span>
+                                                    </div>
                                                 </li>
                                             @endforeach
                                         </ul>
